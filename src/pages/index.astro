@@ -1,0 +1,338 @@
+---
+import Base from '../layouts/Base.astro';
+import Logo from '../components/Logo.astro';
+import Ardoise from '../components/Ardoise.astro';
+import Statut from '../components/Statut.astro';
+import TableHoraires from '../components/TableHoraires.astro';
+import Concerts from '../components/Concerts.astro';
+import site from '../data/site.json';
+import formules from '../data/formules.json';
+import avis from '../data/avis.json';
+import { evenementsJsonLd } from '../lib/evenements';
+
+const siteUrl = Astro.site!.href.replace(/\/$/, '');
+const conf = (s: string) => s.includes('[À CONFIRMER]');
+
+const incontournables = [
+  { nom: 'Tartare, pommes boulangères', note: 'Cité dans les avis : « une mention particulière pour le tartare ».' },
+  { nom: 'Foie gras maison', note: 'Préparé ici, comme le reste.' },
+  { nom: 'Thon cuit sur piperade', note: 'Quand il passe à l’ardoise.' },
+  { nom: 'Pâtes fraîches', note: 'Selon l’ardoise du jour.' },
+  { nom: 'Plats de saison', note: 'La carte suit le marché et les saisons.' },
+  { nom: 'Desserts maison', note: 'Liste à l’ardoise.' },
+];
+
+const faq = [
+  {
+    q: 'Faut-il réserver ?',
+    r: `Le soir, la réservation est recommandée. Appelez-nous au ${site.telephone}.`,
+  },
+  {
+    q: 'Êtes-vous ouverts le soir ?',
+    r: 'Oui, du mercredi au samedi seulement : 19 h 30 – 21 h le mercredi et le jeudi, 19 h 30 – 21 h 30 le vendredi, 19 h – 21 h 30 le samedi. Le lundi et le mardi, on sert uniquement le midi.',
+  },
+  { q: 'Êtes-vous ouverts le dimanche ?', r: 'Non, le restaurant est fermé le dimanche.' },
+  {
+    q: 'Où se garer ?',
+    r: "Le stationnement est facile autour de la place de la Gare. Le soir, le plus simple est le parking de la gare de Groslay, juste en face.",
+  },
+  {
+    q: 'Acceptez-vous les titres-restaurant ?',
+    r: 'Oui : carte bancaire, sans contact et titres-restaurant (Pluxee, Chèque Déjeuner…).',
+  },
+  { q: 'Do you speak English?', r: 'Oui, on peut vous accueillir en anglais. Yes, English is spoken.' },
+];
+
+const jsonld = [
+  {
+    '@type': 'FAQPage',
+    mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.r } })),
+  },
+  ...evenementsJsonLd(siteUrl),
+];
+---
+<Base
+  title="De Grapp'En Verre, bistrot face à la gare de Groslay"
+  description="Bistrot de terroir à Groslay (95), face à la gare : ardoise du jour, cuisine de saison faite maison, vins, cocktails et concerts. Réservation : 01 39 83 37 18."
+  alternates={{ fr: '/', en: '/en/' }}
+  jsonld={jsonld}
+>
+  <!-- 1. Premier écran : le nom + l'ardoise -->
+  <section class="conteneur grid items-start gap-12 pb-16 pt-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16 lg:pb-24 lg:pt-16" aria-labelledby="titre-site">
+    <div class="lg:pt-6">
+      <h1 id="titre-site" class="text-bouteille">
+        <span translate="no">
+        <span class="block whitespace-nowrap text-[clamp(3.2rem,15.5vw,8.25rem)] leading-[0.88]">De Grapp'</span>
+        <span class="block whitespace-nowrap text-[clamp(3.2rem,15.5vw,8.25rem)] leading-[0.88] lg:pl-[0.6em]">En Verre</span>
+        </span>
+        <span class="mt-6 block font-texte text-[clamp(1.35rem,2.6vw,1.9rem)] font-semibold leading-tight text-encre">
+          Bistrot de saison, face à la gare de Groslay
+        </span>
+      </h1>
+      <p class="mt-5 max-w-[52ch] text-lg">
+        Cuisine du terroir faite maison, une ardoise qui change avec le marché, des vins et des cocktails au bar.
+        Une maison tenue par un couple, au {site.adresse.rue}.
+      </p>
+      <Statut class="mt-7 text-lg" />
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a href={`tel:${site.telephoneIntl}`} class="btn btn-reserver">Réserver au {site.telephone}</a>
+        <a href={site.itineraire} target="_blank" rel="noopener" class="btn btn-trait">Itinéraire</a>
+      </div>
+      <p class="mt-4 max-w-[52ch] text-[0.95rem] text-encre/80">
+        Le soir, réservation recommandée. On dîne du mercredi au samedi ; le lundi et le mardi, seulement le midi.
+      </p>
+    </div>
+    <div id="ardoise" class="mx-auto w-full max-w-[30rem] scroll-mt-24 lg:mt-2">
+      <Ardoise />
+      <p class="mt-5 text-center text-[0.95rem] text-encre/80">
+        L'ardoise change souvent : appelez pour savoir ce qu'il y a aujourd'hui.
+      </p>
+    </div>
+  </section>
+
+  <div class="vichy" aria-hidden="true"></div>
+
+  <!-- 2. Formules du midi -->
+  <section class="sur-sombre bg-bouteille py-16 text-creme lg:py-20" aria-labelledby="titre-formules">
+    <div class="conteneur grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+      <div>
+        <h2 id="titre-formules" class="text-[2.55rem] sm:text-6xl">Le midi, deux formules</h2>
+        <p class="mt-5 max-w-[46ch] text-lg text-creme/90">
+          Du lundi au samedi, de 12 h à 14 h, à choisir sur l'ardoise du jour. Titres-restaurant acceptés (Pluxee, Chèque Déjeuner…).
+        </p>
+      </div>
+      <ul class="grid gap-5 sm:grid-cols-2">
+        {formules.formules.map((f) => (
+          <li class="etiquette px-7 py-8 text-center">
+            <p class="font-titre text-3xl text-bouteille">{f.nom}</p>
+            <p class="mx-auto my-4 h-px w-16 bg-bouteille/50"></p>
+            <p class="text-lg">{conf(f.prix) ? <span class="a-confirmer">Prix [À CONFIRMER]</span> : f.prix}</p>
+            <p class="mt-1 text-sm text-encre/75">{f.quand}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- 3. La carte -->
+  <section id="carte" class="conteneur scroll-mt-20 py-20 lg:py-28" aria-labelledby="titre-carte">
+    <div class="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
+      <div>
+        <h2 id="titre-carte" class="text-[2.55rem] text-bouteille sm:text-6xl">Les incontournables</h2>
+        <p class="mt-6 max-w-[44ch] text-lg">
+          Une carte de bistrot qui suit les saisons. Tout est fait maison, avec des produits frais ; certains plats
+          reviennent souvent, d'autres ne passent qu'une semaine à l'ardoise.
+        </p>
+        <p class="mt-4 max-w-[44ch] text-encre/80">
+          Les prix sont donnés sur place et à l'ardoise. <span class="a-confirmer">Prix [À CONFIRMER]</span>
+        </p>
+      </div>
+      <ol class="space-y-6" aria-label="Plats de la maison">
+        {incontournables.map((p) => (
+          <li>
+            <div class="ligne-carte">
+              <h3 class="font-titre text-[1.65rem] leading-tight text-encre sm:text-3xl">{p.nom}</h3>
+              <span class="points" aria-hidden="true"></span>
+              <span class="a-confirmer shrink-0">[À CONFIRMER]</span>
+            </div>
+            <p class="mt-1 text-encre/80">{p.note}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- 4. Le bar, en étiquette de vin -->
+  <section id="bar" class="scroll-mt-20 bg-creme-2 py-20 lg:py-28" aria-labelledby="titre-bar">
+    <div class="conteneur grid gap-12 lg:grid-cols-[1fr_1fr] lg:items-center">
+      <div class="etiquette mx-auto w-full max-w-[34rem] px-8 py-12 text-center sm:px-12">
+        <Logo class="mx-auto h-16 w-auto text-bordeaux" />
+        <h2 id="titre-bar" class="mt-4 text-6xl text-bouteille">Le bar</h2>
+        <p class="mt-2 font-titre text-2xl text-bordeaux">De la grappe au verre</p>
+        <p class="mx-auto my-6 h-px w-24 bg-bouteille/50"></p>
+        <dl class="space-y-5 text-left">
+          <div>
+            <dt class="font-titre text-2xl">Vins à l'ardoise</dt>
+            <dd class="mt-1">La sélection change avec la carte. Demandez le vin du moment, il est écrit sur l'ardoise.</dd>
+          </div>
+          <div>
+            <dt class="font-titre text-2xl">Cocktails</dt>
+            <dd class="mt-1">Au bar, avant ou après le repas. <span class="a-confirmer">Carte des cocktails [À CONFIRMER]</span></dd>
+          </div>
+          <div>
+            <dt class="font-titre text-2xl">Digestifs</dt>
+            <dd class="mt-1">Pour finir le repas. <span class="a-confirmer">Liste [À CONFIRMER]</span></dd>
+          </div>
+        </dl>
+        <p class="mt-8 text-sm text-encre/75">Groslay, Val-d'Oise. L'abus d'alcool est dangereux pour la santé, à consommer avec modération.</p>
+      </div>
+      <div class="max-w-[46ch]">
+        <p class="font-titre text-4xl leading-tight text-bouteille sm:text-5xl">« Tout est frais et goûteux, de l'entrée au plat en passant par le vin ! »</p>
+        <p class="mt-3 text-encre/80">Avis Google</p>
+        <p class="mt-8 text-lg">
+          Le bar sert aussi de scène : c'est là que se jouent les soirées café-concert.
+        </p>
+        <a href="#concerts" class="btn btn-trait mt-5">Voir les concerts</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Concerts : affiches punaisées -->
+  <section id="concerts" class="mur sur-sombre scroll-mt-20 py-20 text-creme lg:py-28" aria-labelledby="titre-concerts">
+    <div class="conteneur">
+      <div class="mb-14 grid gap-6 lg:grid-cols-[1fr_1fr] lg:items-end">
+        <h2 id="titre-concerts" class="text-[2.75rem] sm:text-7xl">Concerts & soirées</h2>
+        <p class="max-w-[46ch] text-lg text-creme/90">
+          Des groupes viennent jouer au bar, le soir. Les dates sont épinglées ici dès qu'elles sont calées.
+        </p>
+      </div>
+      <Concerts />
+    </div>
+  </section>
+
+  <!-- 6. La maison -->
+  <section id="maison" class="conteneur scroll-mt-20 py-20 lg:py-28" aria-labelledby="titre-maison">
+    <div class="grid gap-12 lg:grid-cols-[1fr_1.2fr] lg:gap-16">
+      <div>
+        <h2 id="titre-maison" class="text-[2.55rem] text-bouteille sm:text-6xl">La maison</h2>
+        <div class="mt-6 max-w-[48ch] space-y-4 text-lg">
+          <p>
+            Un couple tient la salle et la cuisine. <span class="a-confirmer">Prénoms des patrons [À CONFIRMER]</span>
+            On reçoit comme à la maison, et on aime que vous repartiez rassasiés.
+          </p>
+          <p>
+            Le cadre est néo-rétro et plein de charme. Aux beaux jours, on profite de la petite terrasse,
+            un jardin fleuri.
+          </p>
+          <p>Accueil en anglais possible. English spoken.</p>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+        <figure class="photo-a-venir col-span-2 bg-bordeaux text-creme" style="min-height:17rem">
+          <strong>Photo à venir</strong>
+          <figcaption>La salle néo-rétro, vue depuis l'entrée, lumière du soir.</figcaption>
+        </figure>
+        <figure class="photo-a-venir bg-kraft">
+          <strong>Photo à venir</strong>
+          <figcaption>La terrasse fleurie, en journée.</figcaption>
+        </figure>
+        <figure class="photo-a-venir bg-bouteille text-creme">
+          <strong>Photo à venir</strong>
+          <figcaption>Le couple derrière le bar (avec leur accord).</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Avis -->
+  <section class="sur-sombre bg-bordeaux py-20 text-creme lg:py-24" aria-labelledby="titre-avis">
+    <div class="conteneur grid gap-12 lg:grid-cols-[0.7fr_1.3fr]">
+      <div>
+        <h2 id="titre-avis" class="sr-only">Avis des clients</h2>
+        <p class="font-titre text-[clamp(5rem,14vw,9rem)] leading-none">4,6<span class="text-[0.45em]">/5</span></p>
+        <p class="mt-3 text-lg">sur {site.note.nombreAvisTexte}</p>
+        <p class="mt-2 text-creme/85">Le restaurant est aussi référencé sur valdoise-tourisme.com et TripAdvisor.</p>
+      </div>
+      <div class="grid gap-x-10 gap-y-9 sm:grid-cols-2">
+        {avis.fr.map((a) => (
+          <figure>
+            <blockquote class="text-lg leading-relaxed">« {a} »</blockquote>
+            <figcaption class="mt-2 text-sm font-semibold text-kraft">{avis.source}</figcaption>
+          </figure>
+        ))}
+        {avis.en.map((a) => (
+          <figure lang="en" class="sm:col-span-2">
+            <blockquote class="font-titre text-2xl leading-snug">“{a}”</blockquote>
+            <figcaption class="mt-2 text-sm font-semibold text-kraft">Google review, in English</figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. Infos pratiques -->
+  <section id="infos" class="conteneur scroll-mt-20 py-20 lg:py-28" aria-labelledby="titre-infos">
+    <h2 id="titre-infos" class="text-[2.55rem] text-bouteille sm:text-6xl">Infos pratiques</h2>
+    <div class="mt-10 grid gap-12 lg:grid-cols-[1fr_1fr] lg:gap-16">
+      <div>
+        <h3 class="font-texte text-xl font-bold">Horaires</h3>
+        <p class="mt-2 text-lg">
+          Le midi du lundi au samedi. <strong>Le soir, seulement du mercredi au samedi.</strong> Fermé le dimanche.
+        </p>
+        <div class="mt-5"><TableHoraires /></div>
+        <Statut class="mt-5" />
+      </div>
+      <div class="space-y-8">
+        <div>
+          <h3 class="font-texte text-xl font-bold">Adresse</h3>
+          <address class="mt-2 text-lg not-italic">
+            {site.nom}<br />{site.adresse.rue}, {site.adresse.codePostal} {site.adresse.ville}<br />
+            Au pied de la gare de Groslay, place de la Gare.
+          </address>
+          <p class="mt-3"><a href={`tel:${site.telephoneIntl}`} class="text-xl font-bold text-bordeaux">{site.telephone}</a></p>
+        </div>
+        <div>
+          <h3 class="font-texte text-xl font-bold">Venir</h3>
+          <ul class="mt-2 space-y-2">
+            <li><strong>En train :</strong> Transilien, gare de Groslay. Le restaurant est juste en face.</li>
+            <li><strong>En voiture :</strong> stationnement facile. Le soir, garez-vous sur le parking de la gare.</li>
+            <li><strong>Paiement :</strong> carte bancaire, sans contact, titres-restaurant (Pluxee, Chèque Déjeuner…).</li>
+          </ul>
+          <p class="mt-4 text-encre/80">
+            À Groslay, dans le Val-d'Oise, à proximité de Montmorency, Saint-Brice-sous-Forêt, Sarcelles, Deuil-la-Barre,
+            Montmagny, Domont et Ézanville.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-12 grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
+      <div data-carte-wrap class="relative flex min-h-[20rem] flex-col items-start justify-end gap-4 border-2 border-bouteille bg-creme-2 p-6">
+        <svg class="pointer-events-none absolute inset-0 h-full w-full text-bouteille/20" viewBox="0 0 400 240" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M0 150 L400 120" stroke="currentColor" stroke-width="10" fill="none" />
+          <path d="M0 158 L400 128" stroke="currentColor" stroke-width="2" stroke-dasharray="10 8" fill="none" />
+          <path d="M210 0 L190 240" stroke="currentColor" stroke-width="6" fill="none" />
+        </svg>
+        <p class="relative font-titre text-3xl text-bouteille">4 rue Charles de Gaulle</p>
+        <p class="relative">Face à la gare, côté place de la Gare.</p>
+        <div class="relative flex flex-wrap gap-3">
+          <button type="button" class="btn btn-trait bg-creme" data-carte={site.mapsEmbed} data-titre="Carte : De Grapp'En Verre à Groslay">
+            Afficher la carte Google Maps
+          </button>
+          <a href={site.itineraire} target="_blank" rel="noopener" class="btn btn-reserver">Itinéraire</a>
+        </div>
+        <p class="relative text-sm text-encre/75">La carte se charge au clic (contenu Google).</p>
+      </div>
+
+      <div class="faq">
+        <h3 class="font-texte text-xl font-bold">Questions fréquentes</h3>
+        <div class="mt-3 border-t-2 border-bouteille">
+          {faq.map((f) => (
+            <details class="border-b border-bouteille/30">
+              <summary class="flex min-h-12 items-center py-3 font-semibold">{f.q}</summary>
+              <p class="pb-4 pr-8">{f.r}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. Groupes, privatisation, traiteur -->
+  <section class="sur-sombre bg-bouteille py-20 text-creme" aria-labelledby="titre-groupes">
+    <div class="conteneur grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
+      <div>
+        <h2 id="titre-groupes" class="text-[2.55rem] sm:text-6xl">Groupes, privatisation, traiteur</h2>
+        <p class="mt-5 max-w-[50ch] text-lg text-creme/90">
+          Un repas de famille, un pot entre collègues, la salle pour vous seuls, ou une commande traiteur pour recevoir chez vous :
+          on en parle de vive voix.
+        </p>
+        <p class="mt-3 text-creme/85"><span class="a-confirmer">Capacité, conditions et tarifs [À CONFIRMER]</span></p>
+      </div>
+      <div class="lg:text-right">
+        <p class="text-creme/85">Appelez le restaurant</p>
+        <a href={`tel:${site.telephoneIntl}`} class="mt-1 inline-block font-titre text-[clamp(2.6rem,7vw,4.5rem)] leading-none text-creme no-underline hover:underline">{site.telephone}</a>
+      </div>
+    </div>
+  </section>
+</Base>

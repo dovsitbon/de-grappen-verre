@@ -1,0 +1,118 @@
+---
+import '@fontsource/abril-fatface/400.css';
+import '@fontsource-variable/libre-franklin/wght.css';
+import '@fontsource/gochi-hand/400.css';
+import '../styles/global.css';
+import abrilUrl from '@fontsource/abril-fatface/files/abril-fatface-latin-400-normal.woff2?url';
+import site from '../data/site.json';
+import { jours } from '../lib/horaires';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import BarreMobile from '../components/BarreMobile.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  lang?: 'fr' | 'en';
+  alternates?: { fr: string; en: string };
+  jsonld?: Record<string, unknown>[];
+  noindex?: boolean;
+}
+const { title, description, lang = 'fr', alternates, jsonld = [], noindex = false } = Astro.props;
+const siteUrl = Astro.site!.href.replace(/\/$/, '');
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const og = `${siteUrl}/og.png`;
+
+const dayMap: Record<number, string> = { 0: 'Sunday', 1: 'Monday', 2: 'Tuesday', 3: 'Wednesday', 4: 'Thursday', 5: 'Friday', 6: 'Saturday' };
+const restaurant: Record<string, unknown> = {
+  '@type': 'Restaurant',
+  '@id': `${siteUrl}/#restaurant`,
+  name: site.nom,
+  alternateName: "De Grapp'en Verre",
+  description:
+    'Bistrot de terroir face à la gare de Groslay : cuisine française de saison faite maison, ardoise du jour, bar à vins et cocktails, soirées café-concert.',
+  url: `${siteUrl}/`,
+  image: og,
+  telephone: site.telephoneIntl,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: site.adresse.rue,
+    postalCode: site.adresse.codePostal,
+    addressLocality: site.adresse.ville,
+    addressRegion: "Val-d'Oise",
+    addressCountry: site.adresse.pays,
+  },
+  servesCuisine: ['French', 'Cuisine française traditionnelle'],
+  acceptsReservations: true,
+  paymentAccepted: 'Carte bancaire, sans contact, titres-restaurant',
+  hasMap: site.itineraire,
+  sameAs: [site.facebook, site.instagram],
+  areaServed: ['Groslay', 'Montmorency', 'Saint-Brice-sous-Forêt', 'Sarcelles', 'Deuil-la-Barre', 'Montmagny', 'Domont', 'Ézanville'],
+  openingHoursSpecification: jours.flatMap((j) =>
+    j.creneaux.map((c) => ({
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: `https://schema.org/${dayMap[j.num]}`,
+      opens: c[0],
+      closes: c[1],
+    })),
+  ),
+  amenityFeature: [
+    { '@type': 'LocationFeatureSpecification', name: 'Terrasse / jardin fleuri', value: true },
+    { '@type': 'LocationFeatureSpecification', name: 'Bar à vins et cocktails', value: true },
+  ],
+  knowsLanguage: ['fr', 'en'],
+};
+if (site.geo) restaurant.geo = { '@type': 'GeoCoordinates', ...(site.geo as object) };
+const ld = { '@context': 'https://schema.org', '@graph': [restaurant, ...jsonld] };
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
+    <link rel="preload" href={abrilUrl} as="font" type="font/woff2" crossorigin />
+    {alternates && (
+      <>
+        <link rel="alternate" hreflang="fr" href={new URL(alternates.fr, Astro.site).href} />
+        <link rel="alternate" hreflang="en" href={new URL(alternates.en, Astro.site).href} />
+        <link rel="alternate" hreflang="x-default" href={new URL(alternates.fr, Astro.site).href} />
+      </>
+    )}
+    <meta name="theme-color" content="#f1e7d3" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.nom} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={og} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="De Grapp'En Verre, bistrot de saison face à la gare de Groslay" />
+    <meta property="og:locale" content={lang === 'en' ? 'en_GB' : 'fr_FR'} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json" set:html={JSON.stringify(ld)} />
+  </head>
+  <body>
+    <a
+      href="#contenu"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-50 focus:bg-creme focus:px-4 focus:py-3 focus:font-semibold"
+    >
+      {lang === 'en' ? 'Skip to content' : 'Aller au contenu'}
+    </a>
+    <Header lang={lang} />
+    <main id="contenu">
+      <slot />
+    </main>
+    <Footer lang={lang} />
+    <BarreMobile lang={lang} />
+    <script>
+      import '../scripts/statut.ts';
+    </script>
+  </body>
+</html>

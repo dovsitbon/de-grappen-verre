@@ -1,0 +1,52 @@
+---
+import ardoise from '../data/ardoise.json';
+interface Props { lang?: 'fr' | 'en' }
+const { lang = 'fr' } = Astro.props;
+const conf = (s: string) => s.includes('[À CONFIRMER]');
+const sans = (s: string) => s.replace('[À CONFIRMER]', '').trim();
+const L = lang === 'en'
+  ? { titre: "Today's slate", du: 'Slate of', entrees: 'Starters', plats: 'Mains', desserts: 'Desserts', vin: 'Wine of the moment' }
+  : { titre: "L'ardoise du jour", du: 'Ardoise du', entrees: 'Entrées', plats: 'Plats', desserts: 'Desserts', vin: 'Le vin du moment' };
+const rubriques = [
+  { titre: L.entrees, items: ardoise.entrees },
+  { titre: L.plats, items: ardoise.plats },
+  { titre: L.desserts, items: ardoise.desserts },
+].filter((r) => r.items.length);
+let i = 0;
+---
+<div class="relative pt-8">
+  <svg class="clou text-bois" viewBox="0 0 120 40" aria-hidden="true">
+    <path d="M14 40 L60 8 L106 40" fill="none" stroke="#3b2a1c" stroke-width="2" />
+    <circle cx="60" cy="8" r="5" fill="#9a9a90" stroke="#4a4a44" stroke-width="1.5" />
+  </svg>
+  <div class="ardoise-cadre ardoise-incline">
+    <article class="ardoise px-6 py-7 sm:px-9 sm:py-9" aria-labelledby="titre-ardoise">
+      {ardoise.exemple && (
+        <p class="absolute -top-3 right-4 rotate-2 bg-[#fff3b0] px-2 py-1 font-texte text-xs font-bold text-[#5a4300] shadow">[EXEMPLE À REMPLACER]</p>
+      )}
+      <h2 id="titre-ardoise" class="craie-ligne text-4xl sm:text-5xl leading-none" style={`--i:${i++}`}>{L.titre}</h2>
+      <p class="craie-ligne mt-2 text-xl text-craie/85" style={`--i:${i++}`}>
+        {L.du} {conf(ardoise.date) ? <span class="a-confirmer">[À CONFIRMER]</span> : ardoise.date}
+      </p>
+      <div class="trait my-5 w-2/3"></div>
+      {rubriques.map((r) => (
+        <section class="mb-4">
+          <h3 class="rubrique craie-ligne text-2xl" style={`--i:${i++}`}>{r.titre}</h3>
+          <ul class="mt-1 space-y-0.5 text-[1.45rem] leading-snug">
+            {r.items.map((it) => (
+              <li class="craie-ligne flex items-baseline gap-3" style={`--i:${i++}`}>
+                <span>{sans(it.nom)}{conf(it.nom) && <span class="a-confirmer ml-2">[À CONFIRMER]</span>}</span>
+                {it.prix && <span class="ml-auto tabular-nums">{it.prix}</span>}
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+      <div class="trait my-5"></div>
+      <p class="craie-ligne text-2xl" style={`--i:${i++}`}>
+        <span class="rubrique">{L.vin} :</span> {sans(ardoise.vin.nom)}{conf(ardoise.vin.nom) && <span class="a-confirmer ml-2">[À CONFIRMER]</span>}
+        {ardoise.vin.detail && <span class="block text-xl text-craie/85">{ardoise.vin.detail}</span>}
+      </p>
+    </article>
+  </div>
+</div>

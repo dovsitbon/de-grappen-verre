@@ -1,0 +1,54 @@
+---
+import site from '../data/site.json';
+import { evenementsAVenir } from '../lib/evenements';
+interface Props { lang?: 'fr' | 'en' }
+const { lang = 'fr' } = Astro.props;
+const en = lang === 'en';
+
+const aVenir = evenementsAVenir();
+
+const fmtDate = (iso: string) =>
+  new Intl.DateTimeFormat(en ? 'en-GB' : 'fr-FR', { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'Europe/Paris' }).format(
+    new Date(`${iso}T12:00:00`),
+  );
+const penche = ['penche-g', 'penche-d', ''];
+---
+<div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+  {aVenir.length > 0 ? (
+    aVenir.map((e, idx) => (
+      <article class={`affiche px-6 pb-8 pt-10 ${penche[idx % 3]}`}>
+        <span class="punaise" aria-hidden="true"></span>
+        {e.exemple && <p class="mb-2 inline-block bg-[#fff3b0] px-2 py-0.5 text-xs font-bold text-[#5a4300]">[EXEMPLE À REMPLACER]</p>}
+        <p class="text-lg font-semibold capitalize text-bordeaux">
+          <time datetime={e.heure ? `${e.date}T${e.heure}` : e.date}>{fmtDate(e.date)}</time>
+        </p>
+        <h3 class="mt-2 text-4xl">{e.groupe}</h3>
+        {e.style && <p class="mt-2">{e.style}</p>}
+        <p class="mt-4 border-t-2 border-encre pt-3 font-semibold">
+          {e.heure && <>{en ? 'From' : 'À partir de'} {e.heure.replace(':', ' h ')}</>}
+          {e.tarif && <span class="block font-normal">{e.tarif}</span>}
+        </p>
+      </article>
+    ))
+  ) : (
+    <article class="affiche penche-g px-6 pb-9 pt-11 sm:col-span-2 lg:col-span-2">
+      <span class="punaise" aria-hidden="true"></span>
+      <p class="text-lg font-semibold text-bordeaux">{en ? 'Café-concert at the bar' : 'Café-concert au bar'}</p>
+      <h3 class="mt-2 text-[2.6rem] leading-[0.95] sm:text-6xl">{en ? 'Next dates coming soon' : 'Prochaines dates bientôt'}</h3>
+      <p class="mt-5 max-w-[46ch] text-lg">
+        {en
+          ? 'Gigs are announced first on our Facebook page and on Instagram. Bands that have already played the bar include A Qui Le Tour and Afrorok.'
+          : "Les soirées sont annoncées d'abord sur Facebook et Instagram. Sont déjà passés au bar : A Qui Le Tour, Afrorok."}
+      </p>
+    </article>
+  )}
+  <aside class="affiche affiche-blanche penche-d px-6 pb-9 pt-11">
+    <span class="punaise" aria-hidden="true"></span>
+    <h3 class="text-3xl">{en ? 'Follow us' : 'Suivez-nous'}</h3>
+    <p class="mt-3">{en ? 'For gig dates, the slate of the day and news from the bistro.' : "Pour les dates de concerts, l'ardoise du jour et les nouvelles de la maison."}</p>
+    <ul class="mt-5 space-y-3">
+      <li><a href={site.facebook} target="_blank" rel="noopener" class="btn btn-trait w-full">Facebook</a></li>
+      <li><a href={site.instagram} target="_blank" rel="noopener" class="btn btn-trait w-full">Instagram {site.instagramHandle}</a></li>
+    </ul>
+  </aside>
+</div>

@@ -1,0 +1,53 @@
+---
+import Base from '../layouts/Base.astro';
+import site from '../data/site.json';
+---
+<Base title="Politique de confidentialité | De Grapp'En Verre, Groslay" description="Politique de confidentialité du site de De Grapp'En Verre à Groslay : aucun cookie, aucun traceur, carte Google Maps chargée seulement à votre demande.">
+  <article class="conteneur max-w-3xl py-16 lg:py-24">
+    <h1 class="text-[2.55rem] text-bouteille sm:text-6xl">Politique de confidentialité</h1>
+    <div class="mt-10 space-y-10 text-lg">
+      <section>
+        <h2 class="font-texte text-2xl font-bold">En bref</h2>
+        <p class="mt-3">
+          Ce site ne dépose aucun cookie, n'utilise aucun outil de mesure d'audience ni aucun traceur publicitaire.
+          Il n'y a pas de formulaire : pour réserver, on vous répond au téléphone.
+        </p>
+      </section>
+      <section>
+        <h2 class="font-texte text-2xl font-bold">Responsable du traitement</h2>
+        <p class="mt-3">{site.nom}, {site.adresse.rue}, {site.adresse.codePostal} {site.adresse.ville}. Téléphone : {site.telephone}.</p>
+      </section>
+      <section>
+        <h2 class="font-texte text-2xl font-bold">Hébergement et journaux techniques</h2>
+        <p class="mt-3">
+          Le site est hébergé par Vercel Inc. Comme tout hébergeur, Vercel enregistre des journaux techniques
+          (adresse IP, date, page demandée) pour assurer la sécurité et le bon fonctionnement du service. Nous n'utilisons
+          pas ces données à d'autres fins.
+        </p>
+      </section>
+      <section>
+        <h2 class="font-texte text-2xl font-bold">Carte Google Maps</h2>
+        <p class="mt-3">
+          La carte de la page d'accueil ne se charge que si vous cliquez sur « Afficher la carte Google Maps ». À ce moment,
+          Google peut déposer des cookies et recevoir votre adresse IP, selon sa propre politique de confidentialité.
+          Le lien « Itinéraire » ouvre Google Maps dans un nouvel onglet.
+        </p>
+      </section>
+      <section>
+        <h2 class="font-texte text-2xl font-bold">Réseaux sociaux</h2>
+        <p class="mt-3">
+          Les liens vers Facebook et Instagram sont de simples liens : aucun bouton de partage ni script de ces réseaux
+          n'est chargé sur ce site.
+        </p>
+      </section>
+      <section>
+        <h2 class="font-texte text-2xl font-bold">Vos droits</h2>
+        <p class="mt-3">
+          Vous disposez d'un droit d'accès, de rectification et d'effacement de vos données. Contactez le restaurant au
+          {site.telephone} <span class="a-confirmer">ou par e-mail [À CONFIRMER]</span>. Vous pouvez aussi saisir la CNIL
+          (<a href="https://www.cnil.fr" class="text-bordeaux underline" rel="noopener">cnil.fr</a>).
+        </p>
+      </section>
+    </div>
+  </article>
+</Base>

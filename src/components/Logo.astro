@@ -1,0 +1,21 @@
+---
+// Verre à pied dont le ballon est rempli d'une grappe : « grappe / verre »
+interface Props { class?: string; titre?: string }
+const { class: cls = '', titre } = Astro.props;
+---
+<svg class={cls} viewBox="0 0 40 58" xmlns="http://www.w3.org/2000/svg" role={titre ? 'img' : undefined} aria-hidden={titre ? undefined : 'true'} aria-label={titre}>
+  <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M7 4h26c0 15-4.5 23.5-13 25.5C11.5 27.5 7 19 7 4z" />
+    <path d="M20 29.5V50" />
+    <path d="M11 52.5h18" />
+    <path d="M20 4c0-1.6.8-2.6 2.4-3.1" />
+  </g>
+  <g fill="currentColor">
+    <circle cx="13.6" cy="9.4" r="3.1" />
+    <circle cx="20" cy="9.4" r="3.1" />
+    <circle cx="26.4" cy="9.4" r="3.1" />
+    <circle cx="16.8" cy="15" r="3.1" />
+    <circle cx="23.2" cy="15" r="3.1" />
+    <circle cx="20" cy="20.6" r="3.1" />
+  </g>
+</svg>

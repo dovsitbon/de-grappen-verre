@@ -1,0 +1,51 @@
+---
+import site from '../data/site.json';
+import Logo from './Logo.astro';
+interface Props { lang?: 'fr' | 'en' }
+const { lang = 'fr' } = Astro.props;
+const en = lang === 'en';
+---
+<footer class="sur-sombre bg-ardoise text-craie">
+  <div class="conteneur grid gap-10 py-14 md:grid-cols-[1.3fr_1fr_1fr]">
+    <div>
+      <p class="flex items-center gap-3 font-titre text-3xl text-craie">
+        <Logo class="h-12 w-auto text-kraft" />De Grapp'En Verre
+      </p>
+      <address class="mt-5 not-italic leading-relaxed">
+        {site.adresse.rue}<br />
+        {site.adresse.codePostal} {site.adresse.ville}<br />
+        <span class="text-craie/80">{en ? 'Opposite Groslay railway station' : 'Face à la gare de Groslay'}</span><br />
+        <a href={`tel:${site.telephoneIntl}`} class="mt-2 inline-flex min-h-11 items-center font-semibold text-kraft tabular-nums">{site.telephone}</a>
+      </address>
+    </div>
+    <div>
+      <p class="font-semibold text-kraft">{en ? 'Opening hours' : 'Horaires'}</p>
+      <p class="mt-3 leading-relaxed">
+        {en ? (
+          <>Lunch Monday to Saturday, 12 pm – 2 pm.<br />Dinner Wednesday to Saturday only.<br />Closed on Sunday.</>
+        ) : (
+          <>Midi du lundi au samedi, 12 h – 14 h.<br />Soir du mercredi au samedi seulement.<br />Fermé le dimanche.</>
+        )}
+      </p>
+    </div>
+    <div>
+      <p class="font-semibold text-kraft">{en ? 'Follow us' : 'Suivez-nous'}</p>
+      <ul class="mt-2">
+        <li><a href={site.facebook} rel="noopener" target="_blank" class="inline-flex min-h-11 items-center underline">Facebook</a></li>
+        <li><a href={site.instagram} rel="noopener" target="_blank" class="inline-flex min-h-11 items-center underline">Instagram {site.instagramHandle}</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="border-t border-craie/15">
+    <div class="conteneur flex flex-wrap items-center gap-x-6 gap-y-1 py-4 text-sm text-craie/85">
+      <p>© {new Date().getFullYear()} De Grapp'En Verre, Groslay</p>
+      <a href="/mentions-legales/" class="inline-flex min-h-11 items-center underline">Mentions légales</a>
+      <a href="/confidentialite/" class="inline-flex min-h-11 items-center underline">{en ? 'Privacy (in French)' : 'Confidentialité'}</a>
+      {en ? (
+        <a href="/" hreflang="fr" class="inline-flex min-h-11 items-center underline">Version française</a>
+      ) : (
+        <a href="/en/" hreflang="en" class="inline-flex min-h-11 items-center underline">English</a>
+      )}
+    </div>
+  </div>
+</footer>

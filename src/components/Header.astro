@@ -1,0 +1,62 @@
+---
+import Logo from './Logo.astro';
+import site from '../data/site.json';
+interface Props { lang?: 'fr' | 'en' }
+const { lang = 'fr' } = Astro.props;
+const base = lang === 'en' ? '/en/' : '/';
+const liens =
+  lang === 'en'
+    ? [['#ardoise', 'The slate'], ['#bar', 'Bar'], ['#concerts', 'Live music'], ['#infos', 'Hours & access']]
+    : [['/#carte', 'La carte'], ['/#bar', 'Le bar'], ['/#concerts', 'Concerts'], ['/#maison', 'La maison'], ['/#infos', 'Infos pratiques']];
+---
+<header class="relative z-20 border-b border-bouteille/20 bg-creme">
+  <div class="conteneur flex min-h-[4.25rem] items-center gap-3">
+    <a
+      href={base}
+      class="flex items-center gap-2.5 py-2 text-bouteille no-underline"
+      aria-label={lang === 'en' ? "De Grapp'En Verre, home" : "De Grapp'En Verre, accueil"}
+    >
+      <Logo class="h-10 w-auto text-bordeaux" />
+      <span translate="no" class="font-titre text-[1.3rem] leading-none sm:text-[1.4rem]">De Grapp'En Verre</span>
+    </a>
+    <nav class="ml-auto hidden lg:block" aria-label={lang === 'en' ? 'Main' : 'Principale'}>
+      <ul class="flex items-center">
+        {liens.map(([h, t]) => (
+          <li>
+            <a href={h} class="inline-flex min-h-11 items-center px-3 font-medium text-encre no-underline hover:text-bordeaux hover:underline">{t}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+    <div class="ml-auto flex items-center lg:ml-1">
+      {lang === 'fr' ? (
+        <a href="/en/" hreflang="en" class="inline-flex min-h-11 min-w-11 items-center justify-center font-semibold text-bouteille hover:underline">
+          EN<span class="sr-only"> (English version)</span>
+        </a>
+      ) : (
+        <a href="/" hreflang="fr" class="inline-flex min-h-11 min-w-11 items-center justify-center font-semibold text-bouteille hover:underline">
+          FR<span class="sr-only"> (version française)</span>
+        </a>
+      )}
+      <a href={`tel:${site.telephoneIntl}`} class="hidden min-h-11 items-center px-3 font-semibold text-bordeaux tabular-nums no-underline hover:underline md:inline-flex">
+        {site.telephone}
+      </a>
+      <details class="menu relative lg:hidden">
+        <summary class="flex min-h-11 cursor-pointer list-none items-center pl-3 font-semibold text-bouteille [&::-webkit-details-marker]:hidden">
+          Menu
+        </summary>
+        <ul class="absolute right-0 top-full mt-2 w-60 border border-bouteille/30 bg-creme py-2 shadow-lg">
+          {liens.map(([h, t]) => (
+            <li><a href={h} class="flex min-h-11 items-center px-4 font-medium text-encre no-underline hover:bg-creme-2">{t}</a></li>
+          ))}
+        </ul>
+      </details>
+    </div>
+  </div>
+</header>
+<script>
+  // referme le menu mobile après un clic sur une ancre
+  document.querySelectorAll<HTMLDetailsElement>('details.menu').forEach((d) => {
+    d.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => d.removeAttribute('open')));
+  });
+</script>

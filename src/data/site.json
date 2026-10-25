@@ -1,0 +1,21 @@
+{
+  "nom": "De Grapp'En Verre",
+  "type": "Bistrot de terroir, cuisine de saison faite maison, bar à vins et cocktails",
+  "adresse": {
+    "rue": "4 rue Charles de Gaulle",
+    "codePostal": "95410",
+    "ville": "Groslay",
+    "pays": "FR",
+    "repere": "au pied de la gare de Groslay, place de la Gare"
+  },
+  "telephone": "01 39 83 37 18",
+  "telephoneIntl": "+33139833718",
+  "geo": null,
+  "note": { "valeur": "4,6", "valeurNum": 4.6, "nombreAvis": 145, "nombreAvisTexte": "environ 145 avis Google" },
+  "facebook": "https://www.facebook.com/degrappenverre",
+  "instagram": "https://www.instagram.com/degrappenverre/",
+  "instagramHandle": "@degrappenverre",
+  "itineraire": "https://www.google.com/maps/dir/?api=1&destination=De+Grapp%27En+Verre%2C+4+rue+Charles+de+Gaulle%2C+95410+Groslay",
+  "mapsEmbed": "https://www.google.com/maps?q=De+Grapp%27En+Verre%2C+4+rue+Charles+de+Gaulle%2C+95410+Groslay&output=embed",
+  "paiements": ["Carte bancaire", "Sans contact", "Titres-restaurant (Pluxee, Chèque Déjeuner…)"]
+}

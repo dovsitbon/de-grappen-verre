@@ -1,0 +1,7 @@
+---
+interface Props { lang?: 'fr' | 'en'; class?: string }
+const { lang = 'fr', class: cls = '' } = Astro.props;
+---
+<p class={`statut ${cls}`} data-statut data-etat="inconnu" aria-live="polite">
+  <span data-statut-texte>{lang === 'en' ? 'Opening hours below' : 'Horaires détaillés plus bas'}</span>
+</p>

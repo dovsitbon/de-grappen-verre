@@ -1,0 +1,17 @@
+{
+  "_mode_emploi": "Modifiez ce fichier pour changer l'ardoise affichée sur le site. 'exemple': true affiche une pastille [EXEMPLE À REMPLACER] ; passez-le à false quand l'ardoise est réelle. Laissez un tableau vide [] pour masquer une rubrique. Le prix est facultatif.",
+  "exemple": true,
+  "date": "[À CONFIRMER]",
+  "entrees": [
+    { "nom": "Foie gras maison", "prix": "" }
+  ],
+  "plats": [
+    { "nom": "Tartare, pommes boulangères", "prix": "" },
+    { "nom": "Thon cuit sur piperade", "prix": "" },
+    { "nom": "Pâtes fraîches", "prix": "" }
+  ],
+  "desserts": [
+    { "nom": "Dessert du jour [À CONFIRMER]", "prix": "" }
+  ],
+  "vin": { "nom": "[À CONFIRMER]", "detail": "" }
+}

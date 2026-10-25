@@ -1,0 +1,21 @@
+---
+import site from '../data/site.json';
+interface Props { lang?: 'fr' | 'en' }
+const { lang = 'fr' } = Astro.props;
+---
+<nav
+  class="barre-mobile fixed inset-x-0 bottom-0 z-30 grid grid-cols-[1.4fr_1fr] gap-2 bg-bouteille p-2.5 md:hidden"
+  aria-label={lang === 'en' ? 'Quick contact' : 'Contact rapide'}
+>
+  <a href={`tel:${site.telephoneIntl}`} class="flex min-h-12 items-center justify-center rounded-[3px] bg-bordeaux px-3 font-semibold text-white no-underline">
+    {lang === 'en' ? 'Call to book' : 'Appeler pour réserver'}
+  </a>
+  <a
+    href={site.itineraire}
+    target="_blank"
+    rel="noopener"
+    class="flex min-h-12 items-center justify-center rounded-[3px] border-2 border-creme px-3 font-semibold text-creme no-underline"
+  >
+    {lang === 'en' ? 'Directions' : 'Itinéraire'}
+  </a>
+</nav>

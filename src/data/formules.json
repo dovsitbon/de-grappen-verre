@@ -1,0 +1,6 @@
+{
+  "formules": [
+    { "nom": "Entrée + plat", "prix": "[À CONFIRMER]", "quand": "le midi" },
+    { "nom": "Plat + dessert", "prix": "[À CONFIRMER]", "quand": "le midi" }
+  ]
+}

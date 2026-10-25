@@ -1,0 +1,4 @@
+{
+  "_mode_emploi": "Ajoutez un concert par objet dans 'evenements'. date au format AAAA-MM-JJ, heure au format HH:MM. Les dates passées disparaissent du site au build suivant. Tableau vide = le site affiche « Prochaines dates bientôt ».",
+  "evenements": []
+}

@@ -1,0 +1,22 @@
+# De Grapp'En Verre
+
+> Bistrot de terroir tenu par un couple, face à la gare de Groslay (Val-d'Oise, 95410). Cuisine française traditionnelle de saison, faite maison ; ardoise du jour ; bar à vins et cocktails ; soirées café-concert.
+
+- Adresse : 4 rue Charles de Gaulle, 95410 Groslay (place de la Gare, au pied de la gare de Groslay)
+- Téléphone / réservation : 01 39 83 37 18 (réservation recommandée le soir)
+- Horaires : lundi et mardi 12h00–14h00 ; mercredi et jeudi 12h00–14h00 et 19h30–21h00 ; vendredi 12h00–14h00 et 19h30–21h30 ; samedi 12h00–14h00 et 19h00–21h30 ; dimanche fermé
+- Le soir : seulement du mercredi au samedi
+- Spécialités citées par les clients : tartare avec pommes boulangères, foie gras maison, thon cuit sur piperade, pâtes fraîches, desserts
+- Formules du midi : entrée + plat ou plat + dessert
+- Paiements : carte bancaire, sans contact, titres-restaurant (Pluxee, Chèque Déjeuner…)
+- Accès : Transilien, gare de Groslay (en face) ; le soir, parking de la gare
+- Note Google : 4,6/5 (environ 145 avis)
+- Accueil en anglais possible ; petite terrasse / jardin fleuri ; traiteur, groupes et privatisation sur demande par téléphone
+
+## Pages
+
+- [Accueil (français)](https://de-grappen-verre.vercel.app/): ardoise du jour, carte, bar, concerts, maison, avis, infos pratiques
+- [English](https://de-grappen-verre.vercel.app/en/): short English version
+- [Mentions légales](https://de-grappen-verre.vercel.app/mentions-legales/)
+- [Facebook](https://www.facebook.com/degrappenverre)
+- [Instagram](https://www.instagram.com/degrappenverre/)

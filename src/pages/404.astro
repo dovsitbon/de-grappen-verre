@@ -1,0 +1,22 @@
+---
+import Base from '../layouts/Base.astro';
+import site from '../data/site.json';
+---
+<Base title="Page introuvable | De Grapp'En Verre" description="Cette page n'existe pas. Retour à l'accueil de De Grapp'En Verre, bistrot face à la gare de Groslay." noindex>
+  <section class="conteneur grid gap-10 py-16 lg:grid-cols-[1fr_1fr] lg:items-center lg:py-28">
+    <div>
+      <h1 class="text-6xl text-bouteille sm:text-7xl">Cette page n'est plus à l'ardoise</h1>
+      <p class="mt-6 max-w-[44ch] text-lg">Elle a peut-être changé d'adresse, comme les plats du jour. Le reste de la maison est toujours là.</p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="/" class="btn btn-reserver">Retour à l'accueil</a>
+        <a href={`tel:${site.telephoneIntl}`} class="btn btn-trait">Appeler le {site.telephone}</a>
+      </div>
+    </div>
+    <div class="ardoise-cadre mx-auto w-full max-w-sm" aria-hidden="true">
+      <div class="ardoise px-8 py-10 text-center">
+        <p class="text-[5.5rem] leading-none">404</p>
+        <p class="mt-3 text-2xl">Plus de cette page aujourd'hui !</p>
+      </div>
+    </div>
+  </section>
+</Base>

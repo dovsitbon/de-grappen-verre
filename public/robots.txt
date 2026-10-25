@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://de-grappen-verre.vercel.app/sitemap-index.xml

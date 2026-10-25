@@ -1,0 +1,12 @@
+{
+  "fuseau": "Europe/Paris",
+  "jours": [
+    { "jour": "Lundi",    "en": "Monday",    "num": 1, "creneaux": [["12:00", "14:00"]] },
+    { "jour": "Mardi",    "en": "Tuesday",   "num": 2, "creneaux": [["12:00", "14:00"]] },
+    { "jour": "Mercredi", "en": "Wednesday", "num": 3, "creneaux": [["12:00", "14:00"], ["19:30", "21:00"]] },
+    { "jour": "Jeudi",    "en": "Thursday",  "num": 4, "creneaux": [["12:00", "14:00"], ["19:30", "21:00"]] },
+    { "jour": "Vendredi", "en": "Friday",    "num": 5, "creneaux": [["12:00", "14:00"], ["19:30", "21:30"]] },
+    { "jour": "Samedi",   "en": "Saturday",  "num": 6, "creneaux": [["12:00", "14:00"], ["19:00", "21:30"]] },
+    { "jour": "Dimanche", "en": "Sunday",    "num": 0, "creneaux": [] }
+  ]
+}

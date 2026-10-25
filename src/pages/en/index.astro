@@ -1,0 +1,101 @@
+---
+import Base from '../../layouts/Base.astro';
+import Ardoise from '../../components/Ardoise.astro';
+import Statut from '../../components/Statut.astro';
+import TableHoraires from '../../components/TableHoraires.astro';
+import site from '../../data/site.json';
+import avis from '../../data/avis.json';
+---
+<Base
+  lang="en"
+  title="De Grapp'En Verre, French bistro in Groslay"
+  description="Family-run French bistro opposite Groslay station (Val-d'Oise): home-made seasonal cooking, wine, cocktails and live music. Book on +33 1 39 83 37 18."
+  alternates={{ fr: '/', en: '/en/' }}
+>
+  <section class="conteneur grid items-start gap-12 pb-16 pt-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16 lg:pb-24 lg:pt-16" aria-labelledby="titre-site">
+    <div class="lg:pt-6">
+      <h1 id="titre-site" class="text-bouteille">
+        <span translate="no">
+        <span class="block whitespace-nowrap text-[clamp(3.2rem,15.5vw,8.25rem)] leading-[0.88]">De Grapp'</span>
+        <span class="block whitespace-nowrap text-[clamp(3.2rem,15.5vw,8.25rem)] leading-[0.88] lg:pl-[0.6em]">En Verre</span>
+        </span>
+        <span class="mt-6 block font-texte text-[clamp(1.35rem,2.6vw,1.9rem)] font-semibold leading-tight text-encre">
+          Seasonal French bistro, opposite Groslay station
+        </span>
+      </h1>
+      <p class="mt-5 max-w-[52ch] text-lg">
+        Classic French cooking, made in-house from seasonal produce. A slate that changes with the market, wine and
+        cocktails at the bar, and a small flowered terrace. Run by a couple, and English is spoken.
+      </p>
+      <Statut lang="en" class="mt-7 text-lg" />
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a href={`tel:${site.telephoneIntl}`} class="btn btn-reserver">Book: +33 1 39 83 37 18</a>
+        <a href={site.itineraire} target="_blank" rel="noopener" class="btn btn-trait">Directions</a>
+      </div>
+      <p class="mt-4 max-w-[52ch] text-[0.95rem] text-encre/80">
+        Booking is recommended in the evening. Dinner is served Wednesday to Saturday only.
+      </p>
+    </div>
+    <div id="ardoise" class="mx-auto w-full max-w-[30rem] scroll-mt-24 lg:mt-2">
+      <Ardoise lang="en" />
+      <p class="mt-5 text-center text-[0.95rem] text-encre/80">
+        The slate is written in French and changes often. Ask us, we will gladly translate.
+      </p>
+    </div>
+  </section>
+
+  <div class="vichy" aria-hidden="true"></div>
+
+  <section id="bar" class="sur-sombre scroll-mt-20 bg-bouteille py-16 text-creme lg:py-20" aria-labelledby="titre-bar">
+    <div class="conteneur grid gap-10 lg:grid-cols-2">
+      <div>
+        <h2 id="titre-bar" class="text-[2.55rem] sm:text-6xl">Lunch, dinner, the bar</h2>
+        <ul class="mt-6 max-w-[50ch] space-y-3 text-lg text-creme/90">
+          <li><strong class="text-creme">Lunch</strong>, Monday to Saturday: two set menus, starter and main or main and dessert. <span class="a-confirmer">Prices [À CONFIRMER]</span></li>
+          <li><strong class="text-creme">House favourites</strong>: steak tartare with pommes boulangères, home-made foie gras, seasonal dishes.</li>
+          <li><strong class="text-creme">At the bar</strong>: wines listed on the slate, cocktails and digestifs.</li>
+        </ul>
+      </div>
+      <figure class="self-end" lang="en">
+        <p class="font-titre text-[clamp(4rem,10vw,6.5rem)] leading-none">4.6<span class="text-[0.45em]">/5</span></p>
+        <p class="mt-1 text-creme/85">from about 145 Google reviews</p>
+        <blockquote class="mt-6 font-titre text-2xl leading-snug sm:text-3xl">“{avis.en[0]}”</blockquote>
+        <figcaption class="mt-2 text-sm font-semibold text-kraft">Google review</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="concerts" class="conteneur scroll-mt-20 py-16 lg:py-20" aria-labelledby="titre-concerts">
+    <div class="grid gap-6 lg:grid-cols-[1fr_1fr] lg:items-end">
+      <h2 id="titre-concerts" class="text-[2.55rem] text-bouteille sm:text-6xl">Live music nights</h2>
+      <p class="max-w-[50ch] text-lg">
+        Bands play at the bar on some evenings. Dates are posted on our{' '}<a href={site.facebook} target="_blank" rel="noopener" class="font-semibold text-bordeaux underline">Facebook page</a>{' '}and on{' '}<a href={site.instagram} target="_blank" rel="noopener" class="font-semibold text-bordeaux underline">Instagram</a>, and on the{' '}<a href="/#concerts" hreflang="fr" class="font-semibold text-bordeaux underline">French page</a>.
+      </p>
+    </div>
+  </section>
+
+  <section id="infos" class="scroll-mt-20 bg-creme-2 py-16 lg:py-24" aria-labelledby="titre-infos">
+    <div class="conteneur">
+      <h2 id="titre-infos" class="text-[2.55rem] text-bouteille sm:text-6xl">Hours & getting here</h2>
+      <div class="mt-10 grid gap-12 lg:grid-cols-2 lg:gap-16">
+        <div>
+          <p class="text-lg">Lunch Monday to Saturday. <strong>Dinner Wednesday to Saturday only.</strong> Closed on Sunday.</p>
+          <div class="mt-5"><TableHoraires lang="en" /></div>
+          <Statut lang="en" class="mt-5" />
+        </div>
+        <div class="space-y-6 text-lg">
+          <address class="not-italic">
+            <strong>{site.nom}</strong><br />{site.adresse.rue}, {site.adresse.codePostal} {site.adresse.ville}, France<br />
+            <a href={`tel:${site.telephoneIntl}`} class="font-bold text-bordeaux">+33 1 39 83 37 18</a>
+          </address>
+          <ul class="space-y-2">
+            <li><strong>By train:</strong> Transilien to Groslay station. The bistro is right opposite.</li>
+            <li><strong>By car:</strong> easy parking. In the evening, use the station car park.</li>
+            <li><strong>Payment:</strong> cards, contactless, French meal vouchers.</li>
+          </ul>
+          <a href={site.itineraire} target="_blank" rel="noopener" class="btn btn-reserver">Get directions</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
